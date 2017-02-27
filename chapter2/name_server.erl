@@ -3,8 +3,16 @@
 -export([get_name/1, start/0, loop/1]).
 
 start() ->
-    Pid = spawn(?MODULE, loop, [[]]),
-    true = register(name_server, Pid).
+    case whereis(name_server) of
+        undefined ->
+            Pid = spawn(?MODULE, loop, [[]]),
+            true = register(name_server, Pid);
+        _ ->
+            name_server ! {stop, self()},
+            receive
+                ok -> start()
+            end
+    end.
 
 get_name(V) ->
     name_server ! {new_name, V, self()},
@@ -24,5 +32,8 @@ loop(Var_name_plist) ->
                     From ! New_name,
                     New_list = proplists:delete(V, Var_name_plist),
                     loop([{V, New_name}|New_list])
-            end
+            end;
+        {stop, From} ->
+            true = unregister(name_server),
+            From ! ok
     end.

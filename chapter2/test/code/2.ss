@@ -1,0 +1,1 @@
+(program (let ([c (let ([b (- 154)]) (+ b 101))]) (+ c (let ([d (- (read))]) (+ (read) d)))))
