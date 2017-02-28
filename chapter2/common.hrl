@@ -14,10 +14,10 @@
                   | '-' | {integer, integer()} | {id, atom()}.
 
 %%%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for C0 %%%%%%%%%%%%%%%%%%%%%%%%%
--type c0_program() :: {c0_program, [c0_var()], [statement()]}.
+-type c0_program() :: {c0_program, [c0_var()], [c0_statement()]}.
 
--type statement() :: {assign, c0_var(), c0_exp()}
-                   | {return, c0_arg()}.
+-type c0_statement() :: {assign, c0_var(), c0_exp()}
+                      | {return, c0_arg()}.
 
 -type c0_exp() :: c0_arg()
                 | {read}
@@ -26,7 +26,7 @@
 
 -type c0_arg() :: {int, integer()} | c0_var().
 
--type c0_var() :: {var, atom()}.
+-type c0_var() :: atom().
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Page 18 X86 subset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%reg ::= rsp | rbp | rax | rbx | rcx | rdx | rsi

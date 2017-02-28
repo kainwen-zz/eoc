@@ -10,3 +10,5 @@ File Description
 * `ast_to_src.erl`: generate source code from ast
 * `random_ast`: generator random programs
 * `tests.py`: python program to test
+* `flatten.erl` and `var_server.erl`: the flatten pass to generate C0 language
+* `c0.erl`: the interpreter for C0 language
