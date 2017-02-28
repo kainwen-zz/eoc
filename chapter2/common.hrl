@@ -8,8 +8,6 @@
                 | {var, atom()}
                 | {'let', [atom()], [r1_exp()], r1_exp()}.
 
-
-
 -type r1_token() :: 'program' | '(' | ')' | 'read' | '+' | 'let'
                   | '-' | {integer, integer()} | {id, atom()}.
 
@@ -28,6 +26,26 @@
 
 -type c0_var() :: atom().
 
+%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for X86-star %%%%%%%%%%%%%%%%%%%%%%%%
+-type x86_64_star_program() :: {x86_64_star_program, [x86_64_star_var()], [x86_64_star_inst()]}.
+
+-type x86_64_star_label() :: atom().
+
+-type x86_64_star_inst() :: {addq, x86_64_star_arg(), x86_64_star_arg()}
+                          | {subq, x86_64_star_arg(), x86_64_star_arg()}
+                          | {negq, x86_64_star_arg()}
+                          | {movq, x86_64_star_arg(), x86_64_star_arg()}
+                          | {callq, x86_64_star_label()}
+                          | {pushq, x86_64_star_arg()}
+                          | {popq, x86_64_star_arg()}
+                          | {retq}.
+
+-type x86_64_star_arg() :: {int, integer()}
+                         | {register, reg()}
+                         | x86_64_star_var().
+
+-type x86_64_star_var() :: atom().
+
 %%%%%%%%%%%%%%%%%%%%%%%%% Page 18 X86 subset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%reg ::= rsp | rbp | rax | rbx | rcx | rdx | rsi
 %%      | rdi | r8 | r9 | r10 | r11 | r12 | r13 | r14 | r15
@@ -39,11 +57,13 @@
 %%%%%%%%%%%%% The Abstract Syntax Tree of language above%%%%%%%%%%%%%%%%%%%%%%
 -type x86_64_program() :: {program, integer(), [instruction()]}.
 
+-type x86_64_label() :: atom().
+
 -type instruction() :: {addq, x86_64_arg(), x86_64_arg()}
                      | {subq, x86_64_arg(), x86_64_arg()}
                      | {negq, x86_64_arg()}
                      | {movq, x86_64_arg(), x86_64_arg()}
-                     %| {callq, label()}
+                     | {callq, x86_64_label()}
                      | {pushq, x86_64_arg()}
                      | {popq, x86_64_arg()}
                      | {retq}.
@@ -53,7 +73,7 @@
                     | {deref, integer(), reg()}.
 
 %% comment each reg by usage convention on P180 CSAPP 3rd.
--type reg() :: rsp % stack pointer, hold the address of the top element of the stack
+-type reg() :: rsp % stack pointer
              | rbp % callee saved
              | rax % return value
              | rbx % callee saved

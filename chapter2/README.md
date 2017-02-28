@@ -12,3 +12,4 @@ File Description
 * `tests.py`: python program to test
 * `flatten.erl` and `var_server.erl`: the flatten pass to generate C0 language
 * `c0.erl`: the interpreter for C0 language
+* `select_instructions.erl`: the select_instructions pass to compile C0 to pseudo-x86(`x86_64_star`)
