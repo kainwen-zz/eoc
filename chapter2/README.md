@@ -22,6 +22,7 @@ The code in this directory implements all the modules of Chapter 2.
 * `print_x86.erl`: generate final x86_64 code
 * `compiler.erl`: generate machine code from scheme
 * `test.erl`: full passes test
+* `pe.erl` and `read_index.erl`: add pe pass so that no variables remaining...
 
 ## Passes Flow Chart
 

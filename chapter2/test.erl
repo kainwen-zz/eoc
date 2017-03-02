@@ -1,9 +1,14 @@
 -module(test).
 
--export([test/0]).
+-export([test/0, test_with_pe/0]).
 
 test() ->
     gen_x86_code(),
+    compile_x86_with_gcc(),
+    check(run_exe()).
+
+test_with_pe() ->
+    gen_x86_code_with_pe(),
     compile_x86_with_gcc(),
     check(run_exe()).
 
@@ -16,6 +21,16 @@ gen_x86_code() ->
 gen_x86_code(Code_path, Out_fn) ->
     compiler:compile_file(Code_path,
                           filename:join("test/x86_code", Out_fn ++ ".s")).
+
+gen_x86_code_with_pe() ->
+    Code_dir = "test/code",
+    {ok, Fns} = file:list_dir(Code_dir),
+    [gen_x86_code_with_pe(filename:join(Code_dir, Fn), Fn)
+     || Fn <- Fns].
+
+gen_x86_code_with_pe(Code_path, Out_fn) ->
+    compiler:compile_file_with_pe(Code_path,
+                                  filename:join("test/x86_code", Out_fn ++ ".s")).
 
 compile_x86_with_gcc() ->
     X86_code_dir = "test/x86_code",
