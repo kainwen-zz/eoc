@@ -11,7 +11,7 @@ patch_instructions({program, N, Insts}) ->
      lists:flatten([patch_instruction(Inst) || Inst <- Insts])}.
 
 -spec patch_instruction(instruction()) -> [instruction()].
-patch_instruction({movq, {deref, N1, R1}, {deref, N2, R2}}) ->
+patch_instruction({Inst, {deref, N1, R1}, {deref, N2, R2}}) ->
     [{movq, {deref, N1, R1}, {register, rax}},
-     {movq, {register, rax}, {deref, N2, R2}}];
+     {Inst, {register, rax}, {deref, N2, R2}}];
 patch_instruction(Inst) -> [Inst].

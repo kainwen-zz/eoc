@@ -2,7 +2,7 @@
 
 -include("common.hrl").
 
--export([assign_homes/2]).
+-export([assign_homes/2, assign_homes/1]).
 
 -define(INT_SIZE, 8).
 
@@ -16,6 +16,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 -type maps() :: [{x86_64_star_var(), integer()}].
+
+-spec assign_homes(x86_64_star_program()) -> x86_64_program().
+assign_homes(Prog={x86_64_star_program, Vars, _Insts}) ->
+    Indexes = lists:seq(1, length(Vars)),
+    Maps = [{V, -I * ?INT_SIZE} || {I, V} <- lists:zip(Indexes, Vars)],
+    assign_homes(Prog, Maps).
 
 -spec assign_homes(x86_64_star_program(), maps()) -> x86_64_program().
 assign_homes({x86_64_star_program, Vars, Insts}, Var_pos_map) ->

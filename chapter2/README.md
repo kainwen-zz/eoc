@@ -15,3 +15,5 @@ File Description
 * `select_instructions.erl`: the select_instructions pass to compile C0 to pseudo-x86(`x86_64_star`)
 * `assign_homes.erl`: the assign_homes pass
 * `patch_instructions.erl`: the patch_instructions pass
+* `print_x86`: generate final x86_64 code
+* `compiler`: generate machine code from scheme
