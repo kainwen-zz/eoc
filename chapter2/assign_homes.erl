@@ -2,7 +2,7 @@
 
 -include("common.hrl").
 
--compile(export_all).
+-export([assign_homes/2]).
 
 -define(INT_SIZE, 8).
 
