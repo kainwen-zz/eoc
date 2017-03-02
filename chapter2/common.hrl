@@ -68,7 +68,7 @@
                      | {popq, x86_64_arg()}
                      | {retq}.
 
--type x86_64_arg() :: {integer, integer()}
+-type x86_64_arg() :: {int, integer()}
                     | {register, reg()}
                     | {deref, integer(), reg()}.
 
