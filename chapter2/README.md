@@ -1,5 +1,9 @@
-File Description
-================
+Chapter 2
+==========
+
+The code in this directory implements all the modules of Chapter 2.
+
+## File Description
 
 * `common.hrl`: ast type defines
 * `uniquify.erl`: rename variables in the ast of R1
@@ -17,3 +21,7 @@ File Description
 * `patch_instructions.erl`: the patch_instructions pass
 * `print_x86`: generate final x86_64 code
 * `compiler`: generate machine code from scheme
+
+## Passes Flow Chart
+
+![Passes Flow Chart](passes.jpg)
