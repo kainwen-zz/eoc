@@ -68,6 +68,30 @@
 
 -type x86_64_theta_var() :: atom().
 
+%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for X86-gamma %%%%%%%%%%%%%%%%%%%%%%%%
+-type x86_64_gamma_program() :: {x86_64_gamma_program,
+                                 {[x86_64_gamma_var()],
+                                  digraph:graph(),
+                                  sets:set()},
+                                 [x86_64_gamma_inst()]}.
+
+-type x86_64_gamma_label() :: atom().
+
+-type x86_64_gamma_inst() :: {addq, x86_64_gamma_arg(), x86_64_gamma_arg()}
+                           | {subq, x86_64_gamma_arg(), x86_64_gamma_arg()}
+                           | {negq, x86_64_gamma_arg()}
+                           | {movq, x86_64_gamma_arg(), x86_64_gamma_arg()}
+                           | {callq, x86_64_gamma_label()}
+                           | {pushq, x86_64_gamma_arg()}
+                           | {popq, x86_64_gamma_arg()}
+                           | {retq}.
+
+-type x86_64_gamma_arg() :: {int, integer()}
+                          | {register, reg()}
+                          | x86_64_gamma_var().
+
+-type x86_64_gamma_var() :: atom().
+
 %%%%%%%%%%%%%%%%%%%%%%%%% Page 18 X86 subset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%reg ::= rsp | rbp | rax | rbx | rcx | rdx | rsi
 %%      | rdi | r8 | r9 | r10 | r11 | r12 | r13 | r14 | r15
