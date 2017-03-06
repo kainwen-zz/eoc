@@ -92,6 +92,30 @@
 
 -type x86_64_gamma_var() :: atom().
 
+%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for X86-mu %%%%%%%%%%%%%%%%%%%%%%%%
+-type x86_64_mu_program() :: {x86_64_mu_program,
+                              [{x86_64_mu_var(), x86_64_mu_reg_result()}],
+                              [x86_64_mu_inst()]}.
+
+-type x86_64_mu_label() :: atom().
+
+-type x86_64_mu_inst() :: {addq, x86_64_mu_arg(), x86_64_mu_arg()}
+                        | {subq, x86_64_mu_arg(), x86_64_mu_arg()}
+                        | {negq, x86_64_mu_arg()}
+                        | {movq, x86_64_mu_arg(), x86_64_mu_arg()}
+                        | {callq, x86_64_mu_label()}
+                        | {pushq, x86_64_mu_arg()}
+                        | {popq, x86_64_mu_arg()}
+                        | {retq}.
+
+-type x86_64_mu_arg() :: {int, integer()}
+                       | {register, reg()}
+                       | x86_64_mu_var().
+
+-type x86_64_mu_var() :: atom().
+
+-type x86_64_mu_reg_result() :: {register, reg()} | integer().
+
 %%%%%%%%%%%%%%%%%%%%%%%%% Page 18 X86 subset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%reg ::= rsp | rbp | rax | rbx | rcx | rdx | rsi
 %%      | rdi | r8 | r9 | r10 | r11 | r12 | r13 | r14 | r15
