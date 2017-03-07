@@ -9,3 +9,4 @@ Chapter 4
 * `r2_type_checker.erl` and `senv.erl`: type checker for R2, static analyze a R2 program's type
 * `uniquify.erl` and `name_server.erl`: the uniquify pass
 * `flatten.erl` and `var_server.erl`: the flatten pass
+* `select_instructions.erl`: the select_instructions pass
