@@ -22,3 +22,27 @@
                   | '<' | '>' | '<=' | '>=' | 'let'.
 
 -type r2_type() :: int | bool.
+
+%%%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for C1 %%%%%%%%%%%%%%%%%%%%%%%%%
+-type c1_program() :: {c1_program,
+                       {[c1_var()], {type, c1_type()}},
+                       [c1_statement()]}.
+
+-type c1_var() :: atom().
+
+-type c1_type() :: int | bool.
+
+-type c1_exp() :: c1_arg() | {read} | {minus, c1_arg()}
+                | {plus, c1_arg(), c1_arg()} | {not_op, c1_arg()}
+                | {{c1_cmp, c1_cmp()}, c1_arg(), c1_arg()}.
+
+-type c1_statement() :: {assign, c1_var(), c1_exp()}
+                      | {return, c1_arg()}
+                      | {c1_if,
+                         {{c1_cmp, c1_cmp()}, c1_arg(), c1_arg()},
+                         [c1_statement()],
+                         [c1_statement()]}.
+
+-type c1_arg() :: {int, integer()} | c1_var() | {bool, c1_true} | {bool, c1_false}.
+
+-type c1_cmp() :: 'eq?' | '<' | '>' | '=<' | '>='.
