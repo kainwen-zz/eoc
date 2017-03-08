@@ -10,3 +10,7 @@ Chapter 4
 * `uniquify.erl` and `name_server.erl`: the uniquify pass
 * `flatten.erl` and `var_server.erl`: the flatten pass
 * `select_instructions.erl`: the select_instructions pass
+* `register_allocation.erl` : the register allocation pass, contains
+  + `uncover_liveness` for live analyze
+  + `build_intereference` and `allocate_registers` for graph_coloring
+  + `assign homes` for replace vars with regsiters

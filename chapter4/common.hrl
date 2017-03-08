@@ -49,9 +49,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for x86_star %%%%%%%%%%%%%%%%%%%%%%%
 -type x86_star_program() :: {x86_star_program,
-                             [x86_star_var()],
+                             [x86_star_info()],
                              {type, x86_star_type()},
                              [x86_star_instruction()]}.
+
+-type x86_star_info() :: x86_star_var() | {frame_size, integer()}.
 
 -type x86_star_var() :: atom().
 
@@ -72,7 +74,15 @@
                               | {jmp, x86_star_label()}
                               | {jmp_if, x86_star_cond_code(), x86_star_label()}
                               | {label, x86_star_label()}
-                              | tmp_if_statement().
+                              | tmp_if_statement()
+                              | tmp_if_with_live_vars().
+
+-type tmp_if_with_live_vars() ::{c1_if,
+                                  {{cmp, c1_cmp()},
+                                   x86_star_arg(),
+                                   x86_star_arg()},
+                                 {[x86_star_instruction()], [x86_star_var()]},
+                                 {[x86_star_instruction()], [x86_star_var()]}}.
 
 -type tmp_if_statement() :: {c1_if,
                              {{cmp, c1_cmp()}, x86_star_arg(), x86_star_arg()},
@@ -87,6 +97,8 @@
                       | x86_star_var()
                       | {register, reg()}
                       | {byte_reg, {register, reg()}}.
+
+-type register_allocate_result() :: {register, reg()} | integer().
 
 %%%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for x86_1 %%%%%%%%%%%%%%%%%%%%%%%%%
 -type x86_1_program() :: {x86_1_program,
