@@ -45,7 +45,7 @@ transform_assign({assign, V, {plus, Arg1, Arg2}}) ->
      {addq, Arg2, V}];
 transform_assign({assign, V, {not_op, C1_arg}}) ->
     [{movq, C1_arg, V},
-     {xorq, 1, C1_arg}];
+     {xorq, {int, 1}, C1_arg}];
 transform_assign({assign, V, {{cmp, Cmp}, Arg1, Arg2}}) ->
     [{cmpq, Arg2, Arg1},
      {set,

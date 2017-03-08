@@ -19,7 +19,7 @@ read                    : {token, 'read'}.
 #t                      : {token, '#t'}.
 #f                      : {token, '#f'}.
 and                     : {token, 'and'}.
-not                     : {token, 'tok'}.
+not                     : {token, 'not'}.
 if                      : {token, 'if'}.
 eq[?]                   : {token, 'eq?'}.
 <                       : {token, '<'}.
