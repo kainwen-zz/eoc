@@ -47,15 +47,6 @@ init([]) ->
 handle_call({new_var, Prefix}, _From, {Dict}) ->
     {Name, New_dict} = find_new_name(Dict, Prefix),
     {reply, Name, {New_dict}};
-handle_call({add_vars, Vars}, _From, {Dict}) ->
-    Pairs = dict:to_list(Dict) ++ [{Var, 1} || Var <- Vars],
-    {reply, ok, {dict:from_list(Pairs)}};
-handle_call({get_var_list}, _From, {Dict}) ->
-    Vars = get_vars(Dict),
-    {reply, Vars, {Dict}};
-handle_call({delete_var, V}, _From, {Dict}) ->
-    New_dict = dict:erase(V, Dict),
-    {reply, ok, {New_dict}};
 handle_call({stop}, _From, State) ->
     {stop, normal, ok, State}.
 
@@ -85,10 +76,3 @@ find_new_name(Dict, Prefix) ->
             Name = string:join([Prefix_str, integer_to_list(1)], "."),
             {list_to_atom(Name), New_dict}
     end.
-
-get_vars(Dict) ->
-    Pairs = dict:to_list(Dict),
-    lists:flatten([[list_to_atom(string:join([atom_to_list(Var),
-                                              integer_to_list(I)], "."))
-                    || I <- lists:seq(1, N-1)]
-                   || {Var, N} <- Pairs]).

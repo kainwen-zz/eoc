@@ -34,12 +34,12 @@
 
 -type c1_exp() :: c1_arg() | {read} | {minus, c1_arg()}
                 | {plus, c1_arg(), c1_arg()} | {not_op, c1_arg()}
-                | {{c1_cmp, c1_cmp()}, c1_arg(), c1_arg()}.
+                | {{cmp, c1_cmp()}, c1_arg(), c1_arg()}.
 
 -type c1_statement() :: {assign, c1_var(), c1_exp()}
                       | {return, c1_arg()}
                       | {c1_if,
-                         {{c1_cmp, c1_cmp()}, c1_arg(), c1_arg()},
+                         {{cmp, c1_cmp()}, c1_arg(), c1_arg()},
                          [c1_statement()],
                          [c1_statement()]}.
 

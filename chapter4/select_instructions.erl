@@ -46,7 +46,7 @@ transform_assign({assign, V, {plus, Arg1, Arg2}}) ->
 transform_assign({assign, V, {not_op, C1_arg}}) ->
     [{movq, C1_arg, V},
      {xorq, 1, C1_arg}];
-transform_assign({assign, V, {{c1_cmp, Cmp}, Arg1, Arg2}}) ->
+transform_assign({assign, V, {{cmp, Cmp}, Arg1, Arg2}}) ->
     [{cmpq, Arg1, Arg2},
      {set,
       get_cond_code_from_cmp(Cmp),
@@ -90,8 +90,8 @@ replace_bool_in_exp({plus, Arg1, Arg2}) ->
     {plus, replace_bool_in_arg(Arg1), replace_bool_in_arg(Arg2)};
 replace_bool_in_exp({not_op, Arg}) ->
     {not_op, replace_bool_in_arg(Arg)};
-replace_bool_in_exp({{c1_cmp, Cmp}, Arg1, Arg2}) ->
-    {{c1_cmp, Cmp}, replace_bool_in_arg(Arg1), replace_bool_in_arg(Arg2)};
+replace_bool_in_exp({{cmp, Cmp}, Arg1, Arg2}) ->
+    {{cmp, Cmp}, replace_bool_in_arg(Arg1), replace_bool_in_arg(Arg2)};
 replace_bool_in_exp(Arg) -> replace_bool_in_arg(Arg).
 
 replace_bool_in_arg({int, N}) -> {int, N};
