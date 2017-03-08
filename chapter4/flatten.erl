@@ -161,7 +161,7 @@ replace_var({c1_if, Cmp_exp, Sts1, Sts2}, Map) ->
      [replace_var(St, Map) || St <- Sts2]}.
 
 replace_var_in_exp({read}, _) -> {read};
-replace_var_in_exp({minus, Arg}, Map) -> replace_var_in_arg(Arg, Map);
+replace_var_in_exp({minus, Arg}, Map) -> {minus, replace_var_in_arg(Arg, Map)};
 replace_var_in_exp({plus, Arg1, Arg2}, Map) ->
     {plus, replace_var_in_arg(Arg1, Map), replace_var_in_arg(Arg2, Map)};
 replace_var_in_exp({not_op, Arg}, Map) ->

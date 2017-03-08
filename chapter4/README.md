@@ -14,3 +14,7 @@ Chapter 4
   + `uncover_liveness` for live analyze
   + `build_intereference` and `allocate_registers` for graph_coloring
   + `assign homes` for replace vars with regsiters
+* `lower_condition.erl` and `gensym.erl`: compile if to instructions
+* `patch_instructions.erl`: patch instructions pass
+* `print_x86.erl`: from x86_1 AST to string
+* `compiler.erl`: compile from lisp to X86

@@ -151,4 +151,5 @@
              | r12 % callee saved
              | r13 % callee saved
              | r14 % callee saved
-             | r15.% callee saved
+             | r15 % callee saved
+             | al. % byte register

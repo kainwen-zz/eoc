@@ -2,7 +2,8 @@
 
 -include("common.hrl").
 
--export([register_allocation/1]).
+%-export([register_allocation/1]).
+-compile(export_all).
 
 -define(INT_SIZE, 8).
 
@@ -36,8 +37,10 @@ find_lives([{c1_if, {{cmp, Cmp}, Arg1, Arg2}, Insts1, Insts2}|Insts],
                                        find_vars_in_arg(Arg2)])),
     New_code = [{c1_if,
                  {{cmp, Cmp}, Arg1, Arg2},
-                 {lists:sublist(Code_then, 2, length(Code_then)), Lvl_then},
-                 {lists:sublist(Code_else, 2, length(Code_else)), Lvl_else}} |
+                 {lists:sublist(Code_then, 2, length(Code_then)),
+                  lists:sublist(Lvl_then, 2, length(Lvl_then))},
+                 {lists:sublist(Code_else, 2, length(Code_else)),
+                  lists:sublist(Lvl_else, 2, length(Lvl_else))}} |
                 Code],
     find_lives(Insts, [New_lvs|Lvl], New_code);
 find_lives([Inst|Insts], Lvl=[Live_vars|_Live_vars_list], Code) ->
