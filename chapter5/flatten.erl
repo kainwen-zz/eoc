@@ -143,10 +143,9 @@ loop([{Var, Exp}|Var_exp_list], Body, Sts) ->
             New_body = replace_var_in_exp(Body, {var, Var}, {var, V}),
             loop(Var_exp_list, New_body, Sts ++ Sts_exp);
         _ ->
-            TmpV = var_server:new(),
             {has_type, _, T} = Exp,
-            var_server:add([{TmpV, T}]),
-            loop(Var_exp_list, Body, Sts ++ Sts_exp ++ [{assign, TmpV, Arg}])
+            var_server:add([{Var, T}]),
+            loop(Var_exp_list, Body, Sts ++ Sts_exp ++ [{assign, Var, Arg}])
     end.
 
 replace_var_in_exp(V, _, _)  when is_atom(V) -> V;
@@ -154,7 +153,7 @@ replace_var_in_exp(N, _, _)  when is_integer(N) -> N;
 replace_var_in_exp(L, Old, New) when is_list(L) ->
     [replace_var_in_exp(E, Old, New) || E <- L];
 replace_var_in_exp({var, V}, {var, V}, New) -> New;
-replace_var_in_exp({var, Var}, {var, V}, New) when Var /= V -> New;
+replace_var_in_exp({var, Var}, {var, V}, _New) when Var /= V -> {var, Var};
 replace_var_in_exp(Exp, Old, New) ->
     Ts = tuple_size(Exp),
     list_to_tuple([replace_var_in_exp(element(I, Exp), Old, New)
