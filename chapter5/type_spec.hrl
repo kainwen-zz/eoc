@@ -136,3 +136,87 @@
                 | {bool, c2_true} | {bool, c2_false} | {void}.
 
 -type c2_cmp() :: 'eq?' | '<' | '>' | '=<' | '>='.
+
+%%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for x86_star %%%%%%%%%%%%%%%%%%%%%%%
+-type x86_star_program() :: {x86_star_program,
+                             Var_type_list :: [{atom(), x86_star_type()}],
+                             Program_return_type :: {type,x86_star_type()},
+                             Insts :: [{x86_star_instruction()}]}.
+
+-type x86_star_type() :: int | bool | void | {tuple, [x86_star_type()]}.
+
+-type x86_star_instruction() :: {addq, x86_star_arg(), x86_star_arg()}
+                              | {subq, x86_star_arg(), x86_star_arg()}
+                              | {negq, x86_star_arg()}
+                              | {movq, x86_star_arg(), x86_star_arg()}
+                              | {callq, atom()}
+                              | {pushq, x86_star_arg()}
+                              | {popq, x86_star_arg()}
+                              | {retq}
+                              | {xorq, x86_star_arg(), x86_star_arg()}
+                              | {cmpq, x86_star_arg(), x86_star_arg()}
+                              | {set, cc(), x86_star_arg()}
+                              | {movzbq, x86_star_arg(), x86_star_arg()}
+                              | {jmp, atom()}
+                              | {j, cc(), atom()}
+                              | {label, atom()}
+                              | {c2_if,
+                                 {{cmp, c2_cmp()}, x86_star_arg(), x86_star_arg()},
+                                 [x86_star_instruction()],
+                                 [x86_star_instruction()]}.
+
+-type x86_star_arg() :: atom()
+                      | {int, integer()}
+                      | {register, reg()}
+                      | {deref, {register, reg()}, integer()}
+                      | {byte_reg, {register, reg()}} | {global_value, atom()}.
+
+-type cc() :: 'e' | 'l' | 'le' | 'g' | 'ge'.
+
+%%%%%%%%%%%%%%%%%%%%%%% Abstract Syntax Tree for x86_star %%%%%%%%%%%%%%%%%%%%%%%
+-type x86_gamma_program() :: {x86_gamma_program,
+                              {frame_size, integer()},
+                              {root_size, integer()},
+                              [x86_gamma_instruction()]}.
+
+-type x86_gamma_type() :: int | bool | void | {tuple, [x86_gamma_type()]}.
+
+-type x86_gamma_instruction() :: {addq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {subq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {negq, x86_gamma_arg()}
+                               | {movq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {callq, atom()}
+                               | {pushq, x86_gamma_arg()}
+                               | {popq, x86_gamma_arg()}
+                               | {retq}
+                               | {xorq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {cmpq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {set, cc(), x86_gamma_arg()}
+                               | {movzbq, x86_gamma_arg(), x86_gamma_arg()}
+                               | {jmp, atom()}
+                               | {j, cc(), atom()}
+                               | {label, atom()}.
+
+-type x86_gamma_arg() :: {int, integer()}
+                       | {register, reg()}
+                       | {deref, {register, reg()}, integer()}
+                       | {byte_reg, {register, reg()}} | {global_value, atom()}.
+
+%% comment each reg by usage convention on P180 CSAPP 3rd.
+-type reg() :: rsp % stack pointer
+             | rbp % callee saved
+             | rax % return value
+             | rbx % callee saved
+             | rcx % the 4th x86_64_argument
+             | rdx % the 3rd x86_64_argument
+             | rsi % the 2nd x86_64_argument
+             | rdi % the 1st x86_64_argument
+             | r8  % the 5th x86_64_argument
+             | r9  % the 6th x86_64_argument
+             | r10 % caller saved
+             | r11 % caller saved
+             | r12 % callee saved
+             | r13 % callee saved
+             | r14 % callee saved
+             | r15 % callee saved
+             | al. % byte register
